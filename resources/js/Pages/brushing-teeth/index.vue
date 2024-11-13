@@ -60,9 +60,9 @@ const eventClick = (arg: any) => {
     const date = moment(arg.event.start).format('YYYY-MM-DD')
     formRef.date = date
     formRef.note = arg.event.title
-    formRef.is_morning = dateEdited.is_morning
-    formRef.is_afternoon = dateEdited.is_afternoon
-    formRef.is_evening = dateEdited.is_evening
+    formRef.is_morning = dateEdited.is_morning == 1
+    formRef.is_afternoon = dateEdited.is_afternoon == 1
+    formRef.is_evening = dateEdited.is_evening == 1
     editedData.value = dateEdited
     openModal.value = true;
 }

@@ -57,12 +57,13 @@ const handleDayClick = (arg: any) => {
 
 const eventClick = (arg: any) => {
     const dateEdited = arg.event.extendedProps
+    console.log(dateEdited)
     const date = moment(arg.event.start).format('YYYY-MM-DD')
     formRef.date = date
     formRef.note = arg.event.title
-    formRef.is_morning = dateEdited.is_morning
-    formRef.is_afternoon = dateEdited.is_afternoon
-    formRef.is_evening = dateEdited.is_evening
+    formRef.is_morning = dateEdited.is_morning == 1
+    formRef.is_afternoon = dateEdited.is_afternoon == 1
+    formRef.is_evening = dateEdited.is_evening == 1
     editedData.value = dateEdited
     openModal.value = true;
 }
@@ -87,24 +88,24 @@ const calendarOptions = {
 
 const handleSubmit = () => {
     if (!editedData.value) {
-        formRef.post('/brushing-teeth', {
+        formRef.post('/welcome/brushing-teeth', {
             onFinish: () => {
-                router.get('/brushing-teeth')
+                router.get('/welcome/brushing-teeth')
             }
         })
     } else {
-        formRef.put('/brushing-teeth/' + editedData.value.dataId, {
+        formRef.put('/welcome/brushing-teeth/' + editedData.value.dataId, {
             onFinish: () => {
-                router.get('/brushing-teeth')
+                router.get('/welcome/brushing-teeth')
             }
         })
     }
 }
 
 const handleRemove = () => {
-    router.delete('/brushing-teeth/' + editedData.value.dataId, {
+    router.delete('/welcome/brushing-teeth/' + editedData.value.dataId, {
         onFinish: () => {
-            router.get('/brushing-teeth');
+            router.get('/welcome/brushing-teeth');
         },
         onError: (err) => {
             console.log(err)

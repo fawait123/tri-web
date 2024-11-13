@@ -89,4 +89,14 @@ class AuthController extends Controller
 
         return redirect()->back()->withErrors(['old_password' => 'Password berhasil di perbarui']);
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout(); // Logout user
+
+        $request->session()->invalidate(); // Invalidasi session
+        $request->session()->regenerateToken(); // Regenerasi CSRF token untuk keamanan
+
+        return redirect()->back();
+    }
 }

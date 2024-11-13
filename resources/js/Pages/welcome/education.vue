@@ -21,8 +21,8 @@ const onMore = (item: IEducation) => {
 
 
 <template>
-    <div class="flex justify-center items-center mt-10 gap-4">
+    <div class="grid w-full min-w-[800px]">
         <CardItemList v-for="item in props.educations" :key="item.id" :title="item.title" @onMore="onMore(item)"
-            description="lorem ipsum dolor ismet" />
+            :description="`klik lebih lanjut untuk melihat lebih detail tentang edukasi ${item.title}`" />
     </div>
 </template>

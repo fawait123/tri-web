@@ -22,7 +22,7 @@ const onMore = () => {
             </h5>
         </div>
         <p class="block text-slate-600 leading-normal font-light mb-4">
-            {{ props.description?.substring(0, 100) }} ...
+            {{ props.description?.substring(0, 300) }} ...
         </p>
         <div>
             <button type="button" @click="onMore"

@@ -1,24 +1,16 @@
 <script setup lang="ts">
 import {
     CircleUser,
-    Home,
-    LineChart,
-    Package,
     Package2,
     PanelLeft,
-    Search,
-    ShoppingCart,
-    Users2,
 } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
 import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
     BreadcrumbList,
-    BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
@@ -26,7 +18,13 @@ import { ref } from 'vue'
 import { cn } from '@/lib/utils'
 import MiniSidebar from '@/layouts/MiniSidebar.vue'
 import NormalSidebar from '@/layouts/NormalSidebar.vue'
-import { router, usePage } from '@inertiajs/vue3'
+import { Link, router, usePage } from '@inertiajs/vue3'
+import { menuItem } from '@/constant'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+
+const props = defineProps<{
+    breadcrumb: string
+}>()
 
 const isMiniSidebar = ref(true)
 const handleSidebarMenuClick = () => {
@@ -40,6 +38,14 @@ const toProfile = () => {
     router.get('/profile');
 }
 
+const handleLogout = () => {
+    router.post('/auth/logout', {}, {
+        onSuccess: () => {
+            router.get('/login');
+        }
+    })
+}
+
 </script>
 
 <template>
@@ -51,7 +57,7 @@ const toProfile = () => {
         </aside>
         <div :class="cn('flex flex-col sm:gap-4 transition-all', isMiniSidebar ? 'sm:pl-14' : 'sm:pl-[279px]')">
             <header
-                class="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 lg:h-[60px] lg:px-6">
+                class="sticky top-0 z-30 flex h-14 justify-between items-center gap-4 border-b bg-background px-4 lg:h-[60px] lg:px-6">
                 <Sheet>
                     <SheetTrigger as-child>
                         <Button size="icon" variant="outline" class="sm:hidden">
@@ -66,30 +72,11 @@ const toProfile = () => {
                                 <Package2 class="h-5 w-5 transition-all group-hover:scale-110" />
                                 <span class="sr-only">Acme Inc</span>
                             </a>
-                            <a href="#"
+                            <Link :href="menu.link" v-for="menu in menuItem" :key="menu.label"
                                 class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground">
-                                <Home class="h-5 w-5" />
-                                Dashboard
-                            </a>
-                            <a href="#" class="flex items-center gap-4 px-2.5 text-foreground">
-                                <ShoppingCart class="h-5 w-5" />
-                                Orders
-                            </a>
-                            <a href="#"
-                                class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground">
-                                <Package class="h-5 w-5" />
-                                Products
-                            </a>
-                            <a href="#"
-                                class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground">
-                                <Users2 class="h-5 w-5" />
-                                Customers
-                            </a>
-                            <a href="#"
-                                class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground">
-                                <LineChart class="h-5 w-5" />
-                                Settings
-                            </a>
+                            <component :is="menu.icon" class="h-5 w-5" />
+                            {{ menu.label }}
+                            </Link>
                         </nav>
                     </SheetContent>
                 </Sheet>
@@ -97,39 +84,31 @@ const toProfile = () => {
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink as-child>
-                                <a href="#">Dashboard</a>
+                                <span class="font-bold text-muted-foreground">Halaman</span>
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
                             <BreadcrumbLink as-child>
-                                <a href="#">Orders</a>
+                                <span class="font-bold text-slate-950">{{ props.breadcrumb }}</span>
                             </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Recent Orders</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
-                <div class="relative ml-auto flex-1 md:grow-0">
-                    <Search class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input type="search" placeholder="Search..."
-                        class="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]" />
-                </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
-                        <Button variant="secondary" size="icon" class="rounded-full">
-                            <CircleUser class="h-5 w-5" />
-                            <span class="sr-only">Toggle user menu</span>
-                        </Button>
+                        <Avatar class="mr-6 cursor-pointer">
+                            <AvatarImage src="https://pics.craiyon.com/2023-10-25/b65f72d6d11a48c1bc560059cc36e31f.webp"
+                                alt="@radix-vue" />
+                            <AvatarFallback>AV</AvatarFallback>
+                        </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>{{ page.props?.auth?.user?.email || 'My Account' }}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem @click="toProfile">Profile</DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Logout</DropdownMenuItem>
+                        <DropdownMenuItem @click="handleLogout">Logout</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </header>

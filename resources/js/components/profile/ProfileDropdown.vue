@@ -35,6 +35,14 @@ const toProfile = () => {
     router.get('/welcome/profile')
 }
 
+const handleLogout = () => {
+    router.post('/auth/logout', {}, {
+        onSuccess: () => {
+            router.get('/');
+        }
+    })
+}
+
 </script>
 
 <template>
@@ -57,7 +65,7 @@ const toProfile = () => {
                 </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem @click="handleLogout">
                 <LogOut class="mr-2 h-4 w-4" />
                 <span>Log out</span>
                 <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

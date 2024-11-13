@@ -46,21 +46,5 @@ const page = usePage()
                 </Tooltip>
             </TooltipProvider>
         </nav>
-        <nav class="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger as-child>
-                        <a href="#"
-                            class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8">
-                            <Settings class="h-5 w-5" />
-                            <span class="sr-only">Settings</span>
-                        </a>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">
-                        Settings
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
-        </nav>
     </div>
 </template>

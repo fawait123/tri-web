@@ -9,6 +9,7 @@ use App\Models\Observable;
 use App\Models\Quiz;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -22,7 +23,18 @@ class DashboardController extends Controller
             'observable' => fn() => $this->getListObservable($request),
             'quizActivity' => fn() => Quiz::with('user')->where('created_at', 'like', '%' . date('Y-m-d') . '%')->get(),
             'observableActivity' => fn() => Observable::with('user')->where('created_at', 'like', '%' . date('Y-m-d') . '%')->get(),
+            'notifications' => fn() => $this->getNotification()
         ]);
+    }
+
+    public function getNotification()
+    {
+        return DB::table('users')->whereNotIn('id', function ($query) {
+            $query->select('user_id')
+                ->from('brushing_teeths')
+                ->where('date', date('Y-m-d'));
+        })
+            ->get();
     }
 
     public function getListObservable(Request $request)
@@ -214,5 +226,10 @@ class DashboardController extends Controller
         } else {
             return 'F'; // Untuk menangani nilai di luar rentang
         }
+    }
+
+    public function consultation()
+    {
+        return Inertia::render('welcome/consulation');
     }
 }
