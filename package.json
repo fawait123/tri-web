@@ -13,6 +13,7 @@
         "@fullcalendar/vue3": "^6.1.15",
         "@types/lodash": "^4.17.10",
         "@types/node": "^22.7.5",
+        "@types/nprogress": "^0.2.3",
         "@vitejs/plugin-vue": "^5.1.4",
         "axios": "^1.7.4",
         "laravel-vite-plugin": "^1.0",
