@@ -14,7 +14,7 @@ import { IEducation } from '@/interface';
 
 
 const props = defineProps<{
-    education: IEducation,
+    education?: IEducation,
     editable: boolean
 }>()
 
@@ -54,21 +54,6 @@ const handleBack = () => {
     router.get('/education')
 }
 
-
-document.addEventListener('keydown', (event) => {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
-        event.preventDefault(); // Mencegah aksi default (jika ada)
-        console.log('Ctrl + K pressed');
-        const tooltip = document.querySelector('.ql-tooltip')
-        if (tooltip) {
-            tooltip.style.zIndex = 99999
-            tooltip.style.backgroundColor = 'hsl(var(--primary))'
-            tooltip.style.color = 'white'
-            tooltip.classList.remove('ql-hidden')
-        }
-    }
-})
-
 defineOptions({
     layout: AppLayout
 })
@@ -80,8 +65,7 @@ defineOptions({
             <CardHeader class="px-7">
                 <CardTitle>Menggosok Edukasi</CardTitle>
                 <CardDescription>
-                    Halaman untuk Edukasi <span class="font-semibold">Tekan <span class="text-primary">Ctl + K </span>
-                        untuk menampilkan tooltip <u>Tooltip</u></span>
+                    Tambahkan konten edukasi dibawah ini
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -90,7 +74,8 @@ defineOptions({
                         @input="handleChangeTitle" @blur="handleChangeTitle">{{ formRef.title }}</h6>
                 </div>
                 <QuillEditor v-model:content="formRef.body" content-type="html" :read-only="!editable"
-                    placeholder="Tulis disini" theme="bubble" :options="toolbarOptions" />
+                    :placeholder="props.education ? '' : 'Tulis disini...'" theme="snow" :options="toolbarOptions"
+                    class="min-h-[300px]" />
             </CardContent>
             <CardFooter class="flex justify-end">
                 <div>

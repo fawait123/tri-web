@@ -3,7 +3,8 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import NProgress from 'nprogress'
 import { router } from '@inertiajs/vue3'
-import '@vueup/vue-quill/dist/vue-quill.bubble.css';
+// import '@vueup/vue-quill/dist/vue-quill.bubble.css';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
