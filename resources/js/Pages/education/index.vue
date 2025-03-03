@@ -130,9 +130,9 @@ const openChange = () => {
         </div>
         <Card>
             <CardHeader class="px-7">
-                <CardTitle>Kelola Pengguna</CardTitle>
+                <CardTitle>Kelola Edukasi</CardTitle>
                 <CardDescription>
-                    Halaman untuk kelola pengguna
+                    Halaman untuk kelola edukasi
                 </CardDescription>
             </CardHeader>
             <CardContent>

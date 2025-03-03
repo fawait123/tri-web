@@ -97,6 +97,6 @@ class AuthController extends Controller
         $request->session()->invalidate(); // Invalidasi session
         $request->session()->regenerateToken(); // Regenerasi CSRF token untuk keamanan
 
-        return redirect()->back();
+        return redirect()->route('login');
     }
 }

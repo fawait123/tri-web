@@ -41,7 +41,7 @@ const toProfile = () => {
 const handleLogout = () => {
     router.post('/auth/logout', {}, {
         onSuccess: () => {
-            router.get('/login');
+            router.get('/auth/login');
         }
     })
 }

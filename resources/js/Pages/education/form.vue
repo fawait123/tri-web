@@ -11,6 +11,8 @@ import { QuillEditor } from '@vueup/vue-quill';
 import { ref } from 'vue';
 import { router, useForm } from '@inertiajs/vue3';
 import { IEducation } from '@/interface';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 
 const props = defineProps<{
@@ -69,10 +71,11 @@ defineOptions({
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div class="flex justify-center mb-4">
-                    <h6 :contenteditable="props.editable" class="p-2 text-2xl text-center inline"
-                        @input="handleChangeTitle" @blur="handleChangeTitle">{{ formRef.title }}</h6>
-                </div>
+                <div class="grid gap-2 mb-4">
+                            <Label for="Email">Judul Konten</Label>
+                            <Input v-model="formRef.title" :disabled="!props.editable"
+                                 placeholder="Masukan judul konten" />
+                        </div>
                 <QuillEditor v-model:content="formRef.body" content-type="html" :read-only="!editable"
                     :placeholder="props.education ? '' : 'Tulis disini...'" theme="snow" :options="toolbarOptions"
                     class="min-h-[300px]" />
