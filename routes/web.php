@@ -21,6 +21,7 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'welcome'], function () {
     Route::get('education', [DashboardController::class, 'education']);
     Route::get('education/{uid}', [DashboardController::class, 'educationDetail']);
+    Route::get('education/{uid}/pdf', [DashboardController::class, 'educationDetailPdf']);
     Route::get('video', [DashboardController::class, 'video']);
     Route::get('consultation', [DashboardController::class, 'consultation']);
 

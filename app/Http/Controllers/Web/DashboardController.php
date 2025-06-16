@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Helpers\FileSystem;
 use App\Http\Controllers\Controller;
 use App\Models\BrushingTeeth;
 use App\Models\Education;
@@ -77,8 +78,11 @@ class DashboardController extends Controller
 
     public function education()
     {
+        $files = FileSystem::getFile('pdf');
+
         return Inertia::render('welcome/education', [
-            'educations' => Education::latest()->get()
+            'educations' => Education::latest()->get(),
+            'files' => $files,
         ]);
     }
 
@@ -86,6 +90,13 @@ class DashboardController extends Controller
     {
         return Inertia::render('welcome/educationDetail', [
             'education' => Education::where('id', $id)->first()
+        ]);
+    }
+
+    public function educationDetailPdf($id)
+    {
+        return Inertia::render('welcome/educationDetailPdf', [
+            'education' => $id,
         ]);
     }
 
@@ -109,7 +120,8 @@ class DashboardController extends Controller
 
     public function video()
     {
-        return Inertia::render('welcome/video');
+        $videos = FileSystem::getFile('video');
+        return Inertia::render('welcome/video', compact('videos'));
     }
 
     public function preTest(Request $request)
